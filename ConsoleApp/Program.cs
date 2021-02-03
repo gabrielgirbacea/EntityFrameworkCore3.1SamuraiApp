@@ -1,4 +1,5 @@
-﻿using SamuraiApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SamuraiApp.Data;
 using SamuraiApp.Domain;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace ConsoleApp
 {
     internal class Program
     {
-        private static SamuraiContext context = new SamuraiContext();
+        private static SamuraiContext _context = new SamuraiContext();
 
         static void Main(string[] args)
         {
@@ -32,26 +33,35 @@ namespace ConsoleApp
                 samurais.Add(new Samurai() { Name = $"Samurai{i}" });
             }
 
-            context.Samurais.AddRange(samurais);
-            context.SaveChanges();
+            _context.Samurais.AddRange(samurais);
+            _context.SaveChanges();
         }
 
         private static void AddSamurai()
         {
             var samurai = new Samurai() { Name = "Julie" };
 
-            context.Samurais.Add(samurai);
-            context.SaveChanges();
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
         }
 
         private static void GetSamurais(string text)
         {
-            var samurais = context.Samurais.ToList();
+            var samurais = _context.Samurais.ToList();
             Console.WriteLine($"{text}: Samurai count is {samurais.Count}");
             foreach (var samurai in samurais)
             {
                 Console.WriteLine(samurai.Name);
             }
+        }
+
+        private static void QueryFilters(string nameFilter)
+        {
+            //var samurais = _context.Samurais.Where(s => s.Name == nameFilter).ToList();
+            //var samurais = _context.Samurais.Where(s => EF.Functions.Like(s.Name, "J")).ToList();
+            //var samurais = _context.Samurais.Find(2);
+            //var lastSamurai = _context.Samurais.OrderBy(s => s.Id).LastOrDefault();
+            //var lastSamuraiNoOrder = _context.Samurais.LastOrDefault(); // will fail.
         }
     }
 }
