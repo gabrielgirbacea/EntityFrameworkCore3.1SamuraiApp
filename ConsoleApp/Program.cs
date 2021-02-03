@@ -1,6 +1,7 @@
 ﻿using SamuraiApp.Data;
 using SamuraiApp.Domain;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ConsoleApp
@@ -11,20 +12,33 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            context.Database.EnsureCreated();
-            GetSamurais("Before Add");
-            AddSamurai();
+            //context.Database.EnsureCreated();
+
+            //GetSamurais("Before Add");
+            //AddSamurai();
+
+            InsertSamurais(10);
+
             GetSamurais("After Add");
             Console.Write("Press any key...");
             Console.ReadKey();
         }
 
+        private static void InsertSamurais(int noOfSamurais)
+        {
+            var samurais = new List<Samurai>();
+            for (int i = 0; i < noOfSamurais; i++)
+            {
+                samurais.Add(new Samurai() { Name = $"Samurai{i}" });
+            }
+
+            context.Samurais.AddRange(samurais);
+            context.SaveChanges();
+        }
+
         private static void AddSamurai()
         {
-            var samurai = new Samurai()
-            {
-                Name = "Julie"
-            };
+            var samurai = new Samurai() { Name = "Julie" };
 
             context.Samurais.Add(samurai);
             context.SaveChanges();
