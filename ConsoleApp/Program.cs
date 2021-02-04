@@ -18,17 +18,18 @@ namespace ConsoleApp
             //AddSamurai();
             //InsertSamurais(10);
             //RetrieveAndUpdateMultipleSamurais();
-
             //RetrieveAndDeleteASamurai(1);
             //InsertBattle();
             //QueryAndUpdateBattle_Disconnected();
+            //InsertNewSamuraiWithAQuote();
+            //InsertNewSamuraiWithManyQuotes();
+            //AddQuoteToExistingSamuraiWhileTracked();
+            //AddQuoteToExistingSamuraiNotTracked(2);
+            //AddQuoteToExistingSamuraiNotTracked_Easy(2);
 
-            InsertNewSamuraiWithAQuote();
-            InsertNewSamuraiWithManyQuotes();
-            AddQuoteToExistingSamuraiWhileTracked();
-            AddQuoteToExistingSamuraiNotTracked(2);
-            AddQuoteToExistingSamuraiNotTracked_Easy(2);
-
+            EagerLoadSamuraiWithQuotes();
+            ProjectSamuraisWithQuotes();
+            ProjectSomeProperties();
 
             GetSamurais("After Add");
             Console.Write("Press any key...");
@@ -199,5 +200,49 @@ namespace ConsoleApp
                 newContext.SaveChanges();
             }
         }
+
+        private static void EagerLoadSamuraiWithQuotes()
+        {
+            var samuraiWithQuotes = _context.Samurais.Where(s => s.Name.Contains("Julie"))
+                                                     .Include(s => s.Quotes)
+                                                     .Include(s => s.Clan)
+                                                     .FirstOrDefault();
+        }
+
+        private static void ProjectSomeProperties()
+        {
+            var someProperties = _context.Samurais.Select(s => new { s.Id, s.Name }).ToList();
+            var idsAndNames = _context.Samurais.Select(s => new IdAndName(s.Id, s.Name)).ToList();
+        }
+
+        public struct IdAndName
+        {
+            public IdAndName(int id, string name)
+            {
+                Id = id;
+                Name = name;
+            }
+            public int Id;
+            public string Name;
+        }
+
+        private static void ProjectSamuraisWithQuotes()
+        {
+            //var somePropertiesWithQuotes = _context.Samurais
+            //   .Select(s => new { s.Id, s.Name, s.Quotes.Count })
+            //   .ToList();
+            //var somePropertiesWithQuotes = _context.Samurais
+            //   .Select(s => new { s.Id, s.Name,
+            //     HappyQuotes=s.Quotes.Where(q=>q.Text.Contains("happy")) })
+            //   .ToList();
+            var samuraisWithHappyQuotes = _context.Samurais
+               .Select(s => new {
+                   Samurai = s,
+                   HappyQuotes = s.Quotes.Where(q => q.Text.Contains("happy"))
+               })
+               .ToList();
+        }
+
+
     }
 }
