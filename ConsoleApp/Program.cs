@@ -32,11 +32,16 @@ namespace ConsoleApp
             //FilteringWithRelatedData();
             //ModifyingRelatedDataWhenTracked();
             //ModifyingRelatedDataWhenNotTracked();
+            //JoinBattleAndSamurai();
+            //EnlistSamuraiIntoABattle();
+            //GetSamuraiWithBattles();
+            //RemoveJoinBetweenSamuraiAndBattleSimple();
 
-            JoinBattleAndSamurai();
-            EnlistSamuraiIntoABattle();
-            GetSamuraiWithBattles();
-            RemoveJoinBetweenSamuraiAndBattleSimple();
+            AddNewSamuraiWithHorse();
+            AddNewHorseToSamuraiUsingId();
+            AddNewHorseToSamuraiObject();
+            AddNewHorseToDisconnectedSamuraiObject();
+            ReplaceAHorse();
 
             GetSamurais("After Add");
             Console.Write("Press any key...");
@@ -319,6 +324,49 @@ namespace ConsoleApp
             var join = new SamuraiBattle { BattleId = 1, SamuraiId = 2 };
 
             _context.Remove(join);
+            _context.SaveChanges();
+        }
+
+        private static void AddNewSamuraiWithHorse()
+        {
+            var samurai = new Samurai { Name = "Jina Ujichika" };
+            samurai.Horse = new Horse { Name = "Silver" };
+
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
+        }
+        private static void AddNewHorseToSamuraiUsingId()
+        {
+            var horse = new Horse { Name = "Scout", SamuraiId = 2 };
+
+            _context.Add(horse);
+            _context.SaveChanges();
+        }
+        private static void AddNewHorseToSamuraiObject()
+        {
+            var samurai = _context.Samurais.Find(22);
+            samurai.Horse = new Horse { Name = "Black Beauty" };
+
+            _context.SaveChanges();
+        }
+        private static void AddNewHorseToDisconnectedSamuraiObject()
+        {
+            var samurai = _context.Samurais.AsNoTracking().FirstOrDefault(s => s.Id == 23);
+            samurai.Horse = new Horse { Name = "Mr. Ed" };
+
+            using (var newContext = new SamuraiContext())
+            {
+                newContext.Attach(samurai);
+                newContext.SaveChanges();
+            }
+        }
+
+        private static void ReplaceAHorse()
+        {
+            //var samurai = _context.Samurais.Include(s => s.Horse).FirstOrDefault(s => s.Id == 23);
+            var samurai = _context.Samurais.Find(23); //has a horse
+            samurai.Horse = new Horse { Name = "Trigger" };
+
             _context.SaveChanges();
         }
     }
