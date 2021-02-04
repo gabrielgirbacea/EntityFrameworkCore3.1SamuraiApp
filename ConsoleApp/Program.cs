@@ -14,13 +14,17 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
             //context.Database.EnsureCreated();
-
             //GetSamurais("Before Add");
             //AddSamurai();
-
             //InsertSamurais(10);
-
             //RetrieveAndUpdateMultipleSamurais();
+            //RetrieveAndReleteASamurai(1);
+
+            //RetrieveAndDeleteASamurai(1);
+            //InsertBattle();
+            //QueryAndUpdateBattle_Disconnected();
+
+
 
             GetSamurais("After Add");
             Console.Write("Press any key...");
@@ -79,5 +83,36 @@ namespace ConsoleApp
             samurais.ForEach(s => s.Name += "San");
             _context.SaveChanges();
         }
+
+        private static void RetrieveAndDeleteASamurai(int id)
+        {
+            var samurai = _context.Samurais.Find(id);
+            _context.Samurais.Remove(samurai);
+            _context.SaveChanges();
+        }
+
+        private static void InsertBattle()
+        {
+            _context.Battles.Add(new Battle()
+            {
+                Name = "Battle of Okehazama",
+                StartDate = new DateTime(1560, 05, 01),
+                EndDate = new DateTime(1560, 06, 15),
+            });
+            _context.SaveChanges();
+        }
+
+        private static void QueryAndUpdateBattle_Disconnected()
+        {
+            var battle = _context.Battles.AsNoTracking().FirstOrDefault();
+            battle.EndDate = new DateTime(1560, 06, 30);
+
+            using (var newContextInstance = new SamuraiContext())
+            {
+                newContextInstance.Battles.Update(battle);
+                newContextInstance.SaveChanges();
+            }
+        }
+             
     }
 }
