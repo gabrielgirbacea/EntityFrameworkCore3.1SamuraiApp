@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamuraiApp.Domain", "SamuraiApp.Domain\SamuraiApp.Domain.csproj", "{7A895ED4-0E69-4A2F-A442-86ADE63DE27F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamuraiApp.Domain", "SamuraiApp.Domain\SamuraiApp.Domain.csproj", "{7A895ED4-0E69-4A2F-A442-86ADE63DE27F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamuraiApp.Data", "SamuraiApp.Data\SamuraiApp.Data.csproj", "{625FB2BB-35FB-4C58-8155-746F12DAF616}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamuraiApp.Data", "SamuraiApp.Data\SamuraiApp.Data.csproj", "{625FB2BB-35FB-4C58-8155-746F12DAF616}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{782459F7-E9C3-47CF-9A39-2B721F56A67C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{782459F7-E9C3-47CF-9A39-2B721F56A67C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{CEC89314-E025-458E-A801-876BE980DAFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{CEC89314-E025-458E-A801-876BE980DAFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamuraiAPI", "SamuraiAPI\SamuraiAPI.csproj", "{17E514C7-CF7F-4D2F-8061-332A5535EC73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{CEC89314-E025-458E-A801-876BE980DAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEC89314-E025-458E-A801-876BE980DAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEC89314-E025-458E-A801-876BE980DAFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E514C7-CF7F-4D2F-8061-332A5535EC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E514C7-CF7F-4D2F-8061-332A5535EC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E514C7-CF7F-4D2F-8061-332A5535EC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E514C7-CF7F-4D2F-8061-332A5535EC73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
