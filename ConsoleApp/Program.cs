@@ -166,7 +166,7 @@ namespace ConsoleApp
                     },
                     new Quote ()
                     {
-                        Text="I told you to watch out for the sharp sword! Oh well!" 
+                        Text="I told you to watch out for the sharp sword! Oh well!"
                     }
                 }
             };
@@ -252,7 +252,8 @@ namespace ConsoleApp
             //     HappyQuotes=s.Quotes.Where(q=>q.Text.Contains("happy")) })
             //   .ToList();
             var samuraisWithHappyQuotes = _context.Samurais
-               .Select(s => new {
+               .Select(s => new
+               {
                    Samurai = s,
                    HappyQuotes = s.Quotes.Where(q => q.Text.Contains("happy"))
                })
@@ -262,7 +263,7 @@ namespace ConsoleApp
         private static void FilteringWithRelatedData()
         {
             var samurais = _context.Samurais
-                .Where(s => s.Quotes.Any(q => q.Text.Contains("happy"))) 
+                .Where(s => s.Quotes.Any(q => q.Text.Contains("happy")))
                 .ToList();
         }
 
@@ -391,7 +392,7 @@ namespace ConsoleApp
                 .FirstOrDefault(s => s.Horse.Id == 3);
 
             var horsesWithSamurais = _context.Samurais
-                .Where(s => s.Horse != null)                
+                .Where(s => s.Horse != null)
                 .Select(s => new { Horse = s.Horse, Samurai = s })
                 .ToList();
         }
@@ -403,6 +404,13 @@ namespace ConsoleApp
             var sampsonStat = _context.SamuraiBattleStats
                 .Where(s => s.Name == "SampsonSan")
                 .FirstOrDefault();
+        }
+
+        private static void QueryUsingFromRawSqlStoreProc()
+        {
+            var text = "Happy";
+            var samurais = _context.Samurais.FromSqlRaw(
+                "EXEC dbo.SamuraisWhoSaidAWord {0}", text).ToList();
         }
     }
 }
