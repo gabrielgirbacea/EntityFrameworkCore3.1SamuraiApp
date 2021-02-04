@@ -16,7 +16,7 @@ namespace ConsoleApp
             //context.Database.EnsureCreated();
             //GetSamurais("Before Add");
             //AddSamurai();
-            //InsertSamurais(10);
+            InsertSamurais();
             //RetrieveAndUpdateMultipleSamurais();
             //RetrieveAndDeleteASamurai(1);
             //InsertBattle();
@@ -52,16 +52,11 @@ namespace ConsoleApp
             Console.ReadKey();
         }
 
-        private static void InsertSamurais(int noOfSamurais)
+        private static void InsertSamurais()
         {
-            var samurais = new List<Samurai>();
-            for (int i = 0; i < noOfSamurais; i++)
-            {
-                samurais.Add(new Samurai() { Name = $"Samurai{i}" });
-            }
-
-            _context.Samurais.AddRange(samurais);
-            _context.SaveChanges();
+            var businessDataLogic = new BusinessDataLogic(_context);
+            var newSamuraisCreated = businessDataLogic.AddMultipleSamurais(
+                new string[] { "Sampson", "Tasha", "Other samurai 1", "Other samurai 2" });
         }
 
         private static void AddSamurai()

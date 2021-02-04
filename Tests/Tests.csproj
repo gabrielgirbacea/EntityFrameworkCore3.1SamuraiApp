@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleApp\ConsoleApp.csproj" />
     <ProjectReference Include="..\SamuraiApp.Data\SamuraiApp.Data.csproj" />
     <ProjectReference Include="..\SamuraiApp.Domain\SamuraiApp.Domain.csproj" />
   </ItemGroup>
