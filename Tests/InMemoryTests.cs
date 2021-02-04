@@ -15,18 +15,12 @@ namespace Tests
             var builder = new DbContextOptionsBuilder();
             builder.UseInMemoryDatabase("CanInsertSamurai");
 
-            using (var context = new SamuraiContext(builder.Options, true))
+            using (var context = new SamuraiContext(builder.Options))
             {
-                //context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-
                 var samurai = new Samurai();
                 context.Samurais.Add(samurai);
-                Debug.WriteLine($"Before save: {samurai.Id}");
-                context.SaveChanges();
-                Debug.WriteLine($"AFter save: {samurai.Id}");
 
-                Assert.AreNotEqual(0, samurai.Id);
+                Assert.AreEqual(EntityState.Added, context.Entry(samurai).State);
             }
         }
     }
