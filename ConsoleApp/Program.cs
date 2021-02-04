@@ -41,9 +41,11 @@ namespace ConsoleApp
             //AddNewHorseToSamuraiObject();
             //AddNewHorseToDisconnectedSamuraiObject();
             //ReplaceAHorse();
+            //GetSamuraisWithHorse();
+            //GetHorseWithSamurai();
 
-            GetSamuraisWithHorse();
-            GetHorseWithSamurai();
+            QuerySamuraiBattleStats();
+
 
             GetSamurais("After Add");
             Console.Write("Press any key...");
@@ -392,6 +394,15 @@ namespace ConsoleApp
                 .Where(s => s.Horse != null)                
                 .Select(s => new { Horse = s.Horse, Samurai = s })
                 .ToList();
+        }
+
+        private static void QuerySamuraiBattleStats()
+        {
+            var stats = _context.SamuraiBattleStats.ToList();
+            var firstStat = _context.SamuraiBattleStats.FirstOrDefault();
+            var sampsonStat = _context.SamuraiBattleStats
+                .Where(s => s.Name == "SampsonSan")
+                .FirstOrDefault();
         }
     }
 }
