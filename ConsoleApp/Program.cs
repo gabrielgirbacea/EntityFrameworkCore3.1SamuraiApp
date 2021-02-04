@@ -36,12 +36,14 @@ namespace ConsoleApp
             //EnlistSamuraiIntoABattle();
             //GetSamuraiWithBattles();
             //RemoveJoinBetweenSamuraiAndBattleSimple();
+            //AddNewSamuraiWithHorse();
+            //AddNewHorseToSamuraiUsingId();
+            //AddNewHorseToSamuraiObject();
+            //AddNewHorseToDisconnectedSamuraiObject();
+            //ReplaceAHorse();
 
-            AddNewSamuraiWithHorse();
-            AddNewHorseToSamuraiUsingId();
-            AddNewHorseToSamuraiObject();
-            AddNewHorseToDisconnectedSamuraiObject();
-            ReplaceAHorse();
+            GetSamuraisWithHorse();
+            GetHorseWithSamurai();
 
             GetSamurais("After Add");
             Console.Write("Press any key...");
@@ -335,6 +337,7 @@ namespace ConsoleApp
             _context.Samurais.Add(samurai);
             _context.SaveChanges();
         }
+
         private static void AddNewHorseToSamuraiUsingId()
         {
             var horse = new Horse { Name = "Scout", SamuraiId = 2 };
@@ -342,6 +345,7 @@ namespace ConsoleApp
             _context.Add(horse);
             _context.SaveChanges();
         }
+
         private static void AddNewHorseToSamuraiObject()
         {
             var samurai = _context.Samurais.Find(22);
@@ -349,6 +353,7 @@ namespace ConsoleApp
 
             _context.SaveChanges();
         }
+
         private static void AddNewHorseToDisconnectedSamuraiObject()
         {
             var samurai = _context.Samurais.AsNoTracking().FirstOrDefault(s => s.Id == 23);
@@ -368,6 +373,25 @@ namespace ConsoleApp
             samurai.Horse = new Horse { Name = "Trigger" };
 
             _context.SaveChanges();
+        }
+
+        private static void GetSamuraisWithHorse()
+        {
+            var samurai = _context.Samurais.Include(s => s.Horse).ToList();
+        }
+
+        private static void GetHorseWithSamurai()
+        {
+            var horseWithoutSamurai = _context.Set<Horse>().Find(3);
+
+            var horseWithSamurai = _context.Samurais
+                .Include(s => s.Horse)
+                .FirstOrDefault(s => s.Horse.Id == 3);
+
+            var horsesWithSamurais = _context.Samurais
+                .Where(s => s.Horse != null)                
+                .Select(s => new { Horse = s.Horse, Samurai = s })
+                .ToList();
         }
     }
 }
