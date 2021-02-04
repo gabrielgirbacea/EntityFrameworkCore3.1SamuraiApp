@@ -412,5 +412,14 @@ namespace ConsoleApp
             var samurais = _context.Samurais.FromSqlRaw(
                 "EXEC dbo.SamuraisWhoSaidAWord {0}", text).ToList();
         }
+
+        private static void ExecuteSomeRawSql()
+        {
+            var samuraiId = 22;
+            var x = _context.Database.ExecuteSqlRaw("EXEC DeleteQuotesForSamurai {0}", samuraiId);
+
+            samuraiId = 31;
+            _context.Database.ExecuteSqlInterpolated($"EXEC DeleteQuotesForSamurai {samuraiId}");
+        }
     }
 }
